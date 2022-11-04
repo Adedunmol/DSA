@@ -7,9 +7,6 @@ def mergeSort(arr):
     left = mergeSort(list(arr[0:mid]))
     right = mergeSort(list(arr[mid : len(arr)]))
 
-    print("left", left)
-    print("right", right)
-
     return merge(left, right)
 
 
@@ -41,7 +38,6 @@ def merge(first, second):
         j += 1
         k += 1
 
-    print("mix", mix)
     return mix
 
 

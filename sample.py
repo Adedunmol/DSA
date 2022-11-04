@@ -129,4 +129,79 @@ def thirdMax(nums, low, high):
 
 
 arr = [1, 2, 3, 2]
-print(thirdMax(arr, 0, len(arr) - 1))
+# print(thirdMax(arr, 0, len(arr) - 1))
+
+
+def thirdMax2(nums) -> int:
+
+    maxItem = max(nums)
+
+    if len(nums) < 3:
+        return max
+
+    count = [0] * (maxItem + 1)
+
+    for i in nums:
+        count[i] += 1
+
+    for i in range(1, len(count)):
+        count[i] += count[i - 1]
+
+    sortedArr = [0] * len(nums)
+    for elem in nums[::-1]:
+        count[elem] -= 1
+        sortedArr[count[elem]] = elem
+
+    itemCount = 0
+    j = len(nums) - 1
+    duplicate = set()
+
+    while j > 0 and itemCount != 3:
+
+        if sortedArr[j] not in duplicate:
+            itemCount += 1
+            duplicate.add(sortedArr[j])
+
+        j -= 1
+
+    if itemCount == 3:
+        return sortedArr[j]
+
+    return maxItem
+
+
+print(thirdMax2([3, 2, 1]))
+
+
+def bitonic(arr, target):
+    start = 0
+    end = len(arr) - 1
+
+    while start < end:
+        mid = (start + end) // 2
+
+        if arr[mid] > target:
+            end = mid
+        else:
+            start = mid + 1
+
+    return start
+
+
+def counts(teamA, teamB):
+    res = []
+    teamA.sort()
+    print(teamA)
+    for score in teamB:
+
+        mid = bitonic(teamA, score)
+        print(mid)
+        res.append(mid)
+
+    return res
+
+
+teamA = [2, 3, 10, 5, 4, 8]
+teamB = [3, 1, 7, 8]
+
+print(counts(teamA, teamB))
